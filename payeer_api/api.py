@@ -36,7 +36,7 @@ class PayeerAPI:
         resp = requests.post(url=self.api_url, data=data).json()
         error = resp.get('errors')
         if error:
-	    print("error")
+            print("error")
             raise PayeerAPIException(error)
         else:
             return resp

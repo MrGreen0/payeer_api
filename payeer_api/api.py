@@ -9,6 +9,7 @@ def validate_wallet(wallet):
 
 class PayeerAPIException(Exception):
     """Base payeer api exception class"""
+    print(Exception)
 
 
 class PayeerAPI:
@@ -36,7 +37,7 @@ class PayeerAPI:
         resp = requests.post(url=self.api_url, data=data).json()
         error = resp.get('errors')
         if error:
-	    print("error")
+            print("error")
             raise PayeerAPIException(error)
         else:
             return resp
@@ -55,6 +56,7 @@ class PayeerAPI:
         """
         return self.request(action='balance')['balance']
 
+
     def check_user(self, user):
         """
         Checking Existence of Account
@@ -67,6 +69,7 @@ class PayeerAPI:
             return False
         return True
 
+
     def get_exchange_rate(self, output='N'):
         """
         Automatic Conversion Rates
@@ -75,12 +78,14 @@ class PayeerAPI:
         """
         return self.request(action='getExchangeRate', output=output)['rate']
 
+
     def get_pay_systems(self):
         """
         Getting Available Payment Systems
         :return: dict
         """
         return self.request(action='getPaySystems')['list']
+
 
     def get_history_info(self, history_id):
         """
@@ -90,6 +95,7 @@ class PayeerAPI:
         """
         return self.request(action='historyInfo', historyId=history_id)['info']
 
+
     def shop_order_info(self, shop_id, order_id):
         """
         Information on a Store Transaction
@@ -98,6 +104,7 @@ class PayeerAPI:
         :return: dict
         """
         return self.request(action='shopOrderInfo', shopId=shop_id, orderId=order_id)
+
 
     def transfer(self, sum, to, cur_in='USD', cur_out='USD',
                  comment=None, protect=None, protect_period=None, protect_code=None):
@@ -126,6 +133,7 @@ class PayeerAPI:
         else:
             return False
 
+
     def check_output(self, ps, ps_account, sum_in, cur_in='USD', cur_out='USD'):
         """
         Checking Possibility of Payout
@@ -146,6 +154,7 @@ class PayeerAPI:
             return False
         return True
 
+
     def output(self, ps, ps_account, sum_in, cur_in='USD', cur_out='USD'):
         """
         Payout
@@ -159,6 +168,7 @@ class PayeerAPI:
         data = {'action': 'output', 'ps': ps, 'param_ACCOUNT_NUMBER': ps_account,
                 'sumIn': sum_in, 'curIn': cur_in, 'curOut': cur_out}
         return self.request(**data)
+
 
     def history(self, **kwargs):
         """
